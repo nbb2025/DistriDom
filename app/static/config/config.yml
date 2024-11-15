@@ -1,0 +1,39 @@
+app:
+    env: dev
+    cache: false
+    machine-id: 1
+    service-name: domain
+    server-port: 7080
+    api-prefix: /domain
+jwt:
+    access-expire: 7200
+    refresh-expire: 86400
+    issuer: sni
+    asecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    rsecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+mysql:
+    dbname: distri_domain
+    host: 127.0.0.1
+    max-idle-conns: 0
+    max-open-conns: 0
+    password: 123456
+    port: 3307
+    user: root
+mongo:
+    dbname:
+    uri:
+mail:
+    smtp-server:
+    smtp-port:
+    email-writer:
+    email-bcc:
+    email-cc:
+    account:
+    password:
+    url-prefix:
+obj-store:
+    bucket-name:
+    region:
+    access-id:
+    access-secret:
+    role-arn:
