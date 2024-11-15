@@ -1,0 +1,2 @@
+# DistriDom
+Simplifying Subdomain Distribution.
