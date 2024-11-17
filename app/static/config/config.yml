@@ -9,19 +9,14 @@ jwt:
     access-expire: 7200
     refresh-expire: 86400
     issuer: sni
-    asecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    rsecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-mysql:
-    dbname: distri_domain
-    host: 127.0.0.1
-    max-idle-conns: 0
-    max-open-conns: 0
-    password: 123456
-    port: 3307
-    user: root
-mongo:
-    dbname:
-    uri:
+    asecret: Pe2a23F!afGQW9xC3ks16Tzr5g#jW(@t
+    rsecret: IZvo$ce%G^53DTa5V9+N66nH(k*_QW3+
+postgres:
+    database: distri_domain
+    host: 129.150.39.115
+    port: 5432
+    user: distri_domain
+    password: 7WM84ZYtyHYThQDX
 mail:
     smtp-server:
     smtp-port:
@@ -31,9 +26,3 @@ mail:
     account:
     password:
     url-prefix:
-obj-store:
-    bucket-name:
-    region:
-    access-id:
-    access-secret:
-    role-arn:

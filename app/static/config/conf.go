@@ -11,18 +11,17 @@ import (
 	"path/filepath"
 )
 
-var path = "config/config.yml"
+var path = "app/static/config/config.yml"
 var Conf = new(ProfileInfo)
 
 type ProfileInfo struct {
 	*App            `mapstructure:"app"`
 	*RedisConfig    `mapstructure:"redis"`
-	*MysqlConfig    `mapstructure:"mysql"`
+	*PostgresConfig `mapstructure:"postgres"`
 	*MongoConfig    `mapstructure:"mongo"`
 	*JwtConfig      `mapstructure:"jwt"`
 	*DllConfig      `mapstructure:"dll"`
 	*MailConfig     `mapstructure:"mail"`
-	*ObjStoreConfig `mapstructure:"obj-store"`
 }
 
 // 系统配置
@@ -42,15 +41,12 @@ type RedisConfig struct {
 	DB       int    `mapstructure:"db"`
 }
 
-// mysql配置
-type MysqlConfig struct {
-	Host         string `mapstructure:"host"`
-	Port         int    `mapstructure:"port"`
-	User         string `mapstructure:"user"`
-	Password     string `mapstructure:"password"`
-	DBName       string `mapstructure:"dbname"`
-	MaxIdleConns int    `mapstructure:"max-idle-conns" json:"max-idle-conns" yaml:"max-idle-conns"` // 空闲中的最大连接数
-	MaxOpenConns int    `mapstructure:"max-open-conns" json:"max-open-conns" yaml:"max-open-conns"` // 打开到数据库的最大连接数
+type PostgresConfig struct {
+	Host     string `mapstructure:"host"`
+	Port     int    `mapstructure:"port"`
+	Username string `mapstructure:"username"`
+	Password string `mapstructure:"password"`
+	Database string `mapstructure:"database"`
 }
 
 // MongoDB配置
@@ -84,16 +80,6 @@ type MailConfig struct {
 	BCC        string `mapstructure:"email-bcc"`
 	CC         string `mapstructure:"email-cc"`
 	URLPrefix  string `mapstructure:"url-prefix"`
-}
-
-type ObjStoreConfig struct {
-	//Endpoint     string `mapstructure:"endpoint"`
-	Region     string `mapstructure:"region"`
-	BucketName string `mapstructure:"bucket-name"`
-	//EndpointExternal string `mapstructure:"endpoint-external"`
-	AccessID     string `mapstructure:"access-id"`
-	AccessSecret string `mapstructure:"access-secret"`
-	RoleArn      string `mapstructure:"role-arn"`
 }
 
 // ConfigInit 初始化配置

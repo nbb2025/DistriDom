@@ -2,7 +2,6 @@ package initializer
 
 import (
 	"github.com/nbb2025/distri-domain/app/static/config"
-	"github.com/nbb2025/distri-domain/pkg/tool/orm"
 	"github.com/nbb2025/distri-domain/pkg/util/str"
 )
 
@@ -14,9 +13,8 @@ func InitAll() {
 	machineID := config.Conf.App.MachineID
 
 	str.SnowflakeInit(machineID)
+
 	loggerInit()
-	mysqlInit()
-	orm.MongoInit()
-	cacheInit()
-	ossInit("aliyun")
+
+	pgsqlInit()
 }

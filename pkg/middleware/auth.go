@@ -10,7 +10,8 @@ import (
 
 // noAuthRouters 不需要认证的路由
 var noAuthRouters = []string{
-	config.Conf.App.ApiPrefix + "/base",
+	//config.Conf.App.ApiPrefix + "/base",
+	"/base",
 }
 
 // JwtAuth jwt认证

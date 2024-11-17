@@ -3,20 +3,22 @@ package main
 // 使用 _引入依赖项在main函数执行会直接调用init函数
 import (
 	"fmt"
-	"github.com/gin-contrib/cors"
-	"github.com/gin-gonic/gin"
-	"github.com/nbb2025/distri-domain/app/api/router"
-	"github.com/nbb2025/distri-domain/app/static/config"
-	"github.com/nbb2025/distri-domain/initializer"
-	"github.com/nbb2025/distri-domain/pkg/middleware"
-	"github.com/nbb2025/distri-domain/pkg/util/ginstatic"
-	"github.com/nbb2025/distri-domain/pkg/util/logger"
 	"log"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
 	"time"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+	"github.com/nbb2025/distri-domain/app/api/router"
+	"github.com/nbb2025/distri-domain/app/static/config"
+	"github.com/nbb2025/distri-domain/app/static/embeded"
+	"github.com/nbb2025/distri-domain/initializer"
+	"github.com/nbb2025/distri-domain/pkg/middleware"
+	"github.com/nbb2025/distri-domain/pkg/util/ginstatic"
+	"github.com/nbb2025/distri-domain/pkg/util/logger"
 )
 
 func main() {
@@ -65,7 +67,7 @@ func RunServer() {
 		}
 	}
 	//设置静态内容
-	setFrontStaticFileSystem(r)
+	setFrontStaticEmbed(r)
 
 	//fmt.Printf("[GIN-QuickStart] 接口文档地址：http://127.0.0.1:%v/swagger/index.html\n", conf.Conf.ServerPort)
 	fmt.Printf("[GIN-QuickStart] 前端页面：http://0.0.0.0:%v/\n", config.Conf.ServerPort)
@@ -76,7 +78,7 @@ func RunServer() {
 
 func setFrontStaticFileSystem(r *gin.Engine) {
 	// 设置静态文件夹
-	staticDir := "config/dist"
+	staticDir := "app/static/embeded/web"
 
 	// 检查文件夹是否存在
 	if _, err := os.Stat(staticDir); os.IsNotExist(err) {
@@ -91,6 +93,28 @@ func setFrontStaticFileSystem(r *gin.Engine) {
 		if flag {
 			content, err := os.ReadFile(staticDir + "/index.html")
 			if (err) != nil {
+				context.Writer.WriteHeader(404)
+				context.Writer.WriteString("Not Found")
+				return
+			}
+			context.Writer.WriteHeader(200)
+			context.Writer.Header().Add("Accept", "text/html")
+			context.Writer.Write(content)
+			context.Writer.Flush()
+		}
+	})
+}
+
+func setFrontStaticEmbed(r *gin.Engine) {
+	distFile := embeded.FsWeb
+	// 使用 Gin 提供静态文件服务
+	r.Use(ginstatic.ServeEmbed("/", distFile))
+	r.NoRoute(func(context *gin.Context) {
+		accept := context.GetHeader("Accept")
+		flag := strings.Contains(accept, "text/html")
+		if flag {
+			content, err := distFile.ReadFile("index.html")
+			if err != nil {
 				context.Writer.WriteHeader(404)
 				context.Writer.WriteString("Not Found")
 				return

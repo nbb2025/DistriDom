@@ -16,7 +16,7 @@ import (
 var EmailTemplate string
 
 func init() {
-	b, e := os.ReadFile("config/email_template.html")
+	b, e := os.ReadFile("app/static/config/email_template.html")
 	if e != nil {
 		logger.Error(e.Error())
 	}

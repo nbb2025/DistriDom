@@ -1,22 +1,20 @@
 package initializer
 
 import (
-	"github.com/nbb2025/distri-domain/app/static/config"
-	_ "github.com/nbb2025/distri-domain/pkg/util" //导入i18n等模块
-	"github.com/nbb2025/distri-domain/pkg/util/logger"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/nbb2025/distri-domain/app/static/config"
+	_ "github.com/nbb2025/distri-domain/pkg/util" //导入i18n等模块
+	"github.com/nbb2025/distri-domain/pkg/util/logger"
 )
 
 // 自定义日志初始化配置
 func loggerInit() {
 	var err error
 	env := config.Conf.Env
-	//processName := strings.Replace(filepath.Base(os.Args[0]), ".exe", "", -1)
-	//// 使用进程名修改日志文件名格式
-	//file := filepath.Join(conf.ExePath, "logs", processName+"_"+time.Now().Format(time.DateOnly)+".log")
 	if env == "dev" {
 		err = InitDev()
 	} else {
